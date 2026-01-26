@@ -1,0 +1,68 @@
+This is a Guide to Dockerize the Application in the Repository 
+
+The original Code for this console based application is taken from ~ https://github.com/Haider7214/SpringBoot.git
+
+First of all we need to be connected to our Linux VM(Any flavour of your choice) and install the following~
+*I have used Amazon Linux
+
+sudo yum install maven -y 
+sudo yum install git -y
+sudo yum install docker -y
+docker systemctl start docker 
+docker systemctl enable docker
+
+#exit and reconnect to the VM on your Terminal
+
+git clone git@github.com:Ankush-9/Dockerizing-Maven-Springboot-App.git
+ls -l
+cd Dockerizing-Maven-Springboot-App.git
+ls -l
+cd SringBoot
+ls -l
+mvn clean package
+
+*If you clone project from original authors repo remember to edit the pom.xml and use java.verion as to be 17 rather than 21
+
+cd target 
+ls -l
+
+#We require a .jar file which must be present and visible after we hit the above command
+
+cd ..
+docker login
+
+	#Provide your DockerHub username and Password to connect to your Account for push operations
+
+vi Dockerfile
+	i
+	
+	FROM eclipse-temurin:17-jdk-jammy
+	MAINTAINER <your-name> <your-email>
+	COPY target/<app-name.jar> /usr/app/
+	EXPOSE 8080
+	WORKDIR /usr/app
+	ENTRYPOINT ["java" ,"-jar" ,"<app-name.jar>"]
+
+	esc 
+	:wq + ENTER
+
+docker build -t sboot-app .
+docker images
+	#To verify image is present 
+docker tag sboot-app <docker-acc-username>/sboot-app:<tag>
+docker push <docker-acc-username>/sboot-app:<tag>	
+
+	#Go to your Docker hub account and verify the image under Profile >> "My Hub" Section
+
+To run the project~
+
+docker run -d sboot-app
+docker ps -a
+	#copy container-id
+docker logs <container-id>
+	#As stated earlier it's a console based app so the information and working are displayed under logs.
+
+====END========================================================================================================================>>
+	
+
+
