@@ -62,6 +62,15 @@ docker ps -a
 docker logs <container-id>
 	#As stated earlier it's a console based app so the information and working are displayed under logs.
 
+# Pushing Image to DockerHub Account
+If you want to push this app to your DockerHub Account ,First of all amke sure you are logged in to your dockerHub account(if not use ~ docker login)and provide credentials then ~
+
+docker tag <image-name> <dockerhub-username>/<image-name>:<tag>
+docker push <dockerhub-username>/<image-name>:<tag>
+
+*Verify whether the image has been pushed or not by Going to DockerHub-->My Profile-->My Hub
+
+
 ====END========================================================================================================================>>
 	
 
